@@ -1,0 +1,132 @@
+---
+swagger: "2.0"
+info:
+  description: "Book Store"
+  version: "1.0.0"
+  title: "KOKO Books"
+  termsOfService: "aklankdiwakar@gmail.com"
+  contact:
+    email: "aklankdiwakar@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "it-prod-build.vmware.com:9009"
+basePath: "/"
+tags:
+- name: "kbooks"
+  description: "kBooks Invoice"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+schemes:
+- "https"
+- "http"
+paths:
+  /kbooks/{story_number}:
+    post:
+      tags:
+      - "kbooks"
+      summary: "Do calculation and generate invoice"
+      description: "This API will do calculation and generate invoice for rented books."
+      operationId: "add_artifact_line"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "story_number"
+        in: "path"
+        description: "Story"
+        required: true
+        type: "string"
+        x-example: "S3"
+      - in: "body"
+        name: "body"
+        description: "Do calculation and generate invoice"
+        required: true
+        schema:
+          $ref: "#/definitions/BookList"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/BookList"
+        "405":
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.kbooks_controller"
+definitions:
+  BookList:
+    type: "object"
+    required:
+    - "fiction"
+    - "novels"
+    - "regular"
+    properties:
+      novels:
+        type: "array"
+        items:
+          type: "array"
+          items:
+            type: "string"
+      fiction:
+        type: "array"
+        items:
+          type: "array"
+          items:
+            type: "string"
+      regular:
+        type: "array"
+        items:
+          type: "array"
+          items:
+            type: "string"
+    example:
+      novels:
+      - - "Anna Karenina"
+        - "3"
+      - - "To Kill a Mockingbird"
+        - "4"
+      - - "The Great Gatsby"
+        - "3"
+      - - "One Hundred Years of Solitude"
+        - "8"
+      - - "A Passage to India"
+        - "4"
+      - - "Invisible Man"
+        - "3"
+      - - "Don Quixote"
+        - "5"
+      - - "Beloved."
+        - "8"
+      fiction:
+      - - "The Paying Guests"
+        - "3"
+      - - "A Tale of Two Cities"
+        - "5"
+      - - "Watership Down"
+        - "6"
+      - - "A Town Like Alice"
+        - "5"
+      - - "The Book Thief"
+        - "1"
+      - - "Brave New World"
+        - "1"
+      - - "The Alchemist"
+        - "2"
+      regular:
+      - - "The Catcher in the Rye"
+        - "1"
+      - - "1984"
+        - "3"
+      - - "Ulysses"
+        - "1"
+      - - "Catch-22"
+        - "3"
+      - - "The Grapes of Wrath"
+        - "4"
+      - - "The Lord of the Rings"
+        - "1"
+      - - "One Hundred Years of Solitude"
+        - "1"
